@@ -1,0 +1,43 @@
+<mddoc>
+
+	<docpage target="README.md">
+
+		<section title="Stream Functions">
+			<badge-poser type="version"/>
+			<badge-poser type="license"/>
+			<badge-github-action name="QuorumCollection/StreamFunctions" workflow="CI"/>
+			<text>Useful functions for manipulating PHP streams (resources)</text>
+			<section title="Requirements">
+				<composer-requires/>
+			</section>
+			<section title="Installing">
+				<composer-install/>
+			</section>
+			<section title="Stream Functions">
+				<section title="`Quorum\Streams\faccept( $stream, string ...$accept ) : ?string`">
+					<text><![CDATA[
+faccept peeks the given stream for the given string returning it if it is found * or null if it is not.
+
+If the string is found, the cursor remains advanced to the end of the string.
+
+If the string is not found, the cursor is reset to its original position.
+					]]></text>
+				</section>
+
+				<section title="`Quorum\Streams\fpeek( $stream, int $length = 1 ) : string`">
+					<text><![CDATA[
+fpeek peeks the given stream for the given length returning as found.
+
+The cursor is reset to its original position.
+					]]></text>
+				</section>
+
+				<section title="`Quorum\Streams\funtil( $stream, string $until ) : string`">
+					<text><![CDATA[
+funtil reads the given stream until the given string is found or eof is reached
+					]]></text>
+				</section>
+			</section>
+		</section>
+	</docpage>
+</mddoc>
