@@ -25,7 +25,7 @@ class StreamsTest extends TestCase {
 		$stream = fopen(__DIR__ . '/data/utf8-bom.csv', 'r');
 		$this->assertSame("\xEF\xBB\xBF", faccept($stream, "\xEF\xBB\xBF"));
 		$line = fgetcsv($stream);
-		$this->assertSame(['a', 'b', 'c'], $line);
+		$this->assertSame([ 'a', 'b', 'c' ], $line);
 	}
 
 	public function test_fpeek() : void {
@@ -34,7 +34,15 @@ class StreamsTest extends TestCase {
 		rewind($stream);
 
 		$this->assertEquals('test', \Quorum\Streams\fpeek($stream, 4));
-		$this->assertEquals('test', \Quorum\Streams\fpeek($stream, 4));
+		$this->assertEquals('test', \Quorum\Streams\fpeek($stream, 40));
+		$this->assertEquals('te', \Quorum\Streams\fpeek($stream, 2));
+		$this->assertEquals('t', \Quorum\Streams\fpeek($stream));
+	}
+
+	public function test_fpeek_empty() : void {
+		$stream = fopen('php://memory', 'r+');
+
+		$this->assertEquals('', \Quorum\Streams\fpeek($stream, 4));
 	}
 
 }

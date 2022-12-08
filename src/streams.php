@@ -46,7 +46,7 @@ function fpeek( $stream, int $length = 1 ) : string {
 	}
 
 	$buf = fread($stream, $length);
-	fseek($stream, 0 - $length, SEEK_CUR);
+	fseek($stream, 0 - strlen($buf), SEEK_CUR);
 
 	return $buf;
 }
