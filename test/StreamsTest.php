@@ -4,6 +4,7 @@ namespace Quorum\test;
 
 use PHPUnit\Framework\TestCase;
 use function Quorum\Streams\faccept;
+use function Quorum\Streams\fpeek;
 
 class StreamsTest extends TestCase {
 
@@ -28,21 +29,31 @@ class StreamsTest extends TestCase {
 		$this->assertSame([ 'a', 'b', 'c' ], $line);
 	}
 
+	public function test_faccept_exception() : void {
+		$this->expectException(\InvalidArgumentException::class);
+		faccept(123, 'test');
+	}
+
 	public function test_fpeek() : void {
 		$stream = fopen('php://memory', 'r+');
 		fwrite($stream, 'test');
 		rewind($stream);
 
-		$this->assertEquals('test', \Quorum\Streams\fpeek($stream, 4));
-		$this->assertEquals('test', \Quorum\Streams\fpeek($stream, 40));
-		$this->assertEquals('te', \Quorum\Streams\fpeek($stream, 2));
-		$this->assertEquals('t', \Quorum\Streams\fpeek($stream));
+		$this->assertEquals('test', fpeek($stream, 4));
+		$this->assertEquals('test', fpeek($stream, 40));
+		$this->assertEquals('te', fpeek($stream, 2));
+		$this->assertEquals('t', fpeek($stream));
 	}
 
 	public function test_fpeek_empty() : void {
 		$stream = fopen('php://memory', 'r+');
 
-		$this->assertEquals('', \Quorum\Streams\fpeek($stream, 4));
+		$this->assertEquals('', fpeek($stream, 4));
+	}
+
+	public function test_fpeek_exception() : void {
+		$this->expectException(\InvalidArgumentException::class);
+		fpeek(123, 123);
 	}
 
 }

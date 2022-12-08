@@ -15,7 +15,7 @@ namespace Quorum\Streams;
  */
 function faccept( $stream, string ...$accept ) : ?string {
 	if( !is_resource($stream) ) {
-		throw new \InvalidArgumentException;
+		throw new \InvalidArgumentException('Stream must be a resource');
 	}
 
 	foreach( $accept as $item ) {
@@ -42,7 +42,7 @@ function faccept( $stream, string ...$accept ) : ?string {
  */
 function fpeek( $stream, int $length = 1 ) : string {
 	if( !is_resource($stream) ) {
-		throw new \InvalidArgumentException;
+		throw new \InvalidArgumentException('Stream must be a resource');
 	}
 
 	$buf = fread($stream, $length);
@@ -61,7 +61,7 @@ function fpeek( $stream, int $length = 1 ) : string {
 // @todo look into how to correctly handle EOF here.
 function funtil( $stream, string $until ) : string {
 	if( !is_resource($stream) ) {
-		throw new \InvalidArgumentException;
+		throw new \InvalidArgumentException('Stream must be a resource');
 	}
 
 	$buf = '';
