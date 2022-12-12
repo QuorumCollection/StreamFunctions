@@ -5,6 +5,7 @@ namespace Quorum\test;
 use PHPUnit\Framework\TestCase;
 use function Quorum\Streams\faccept;
 use function Quorum\Streams\fpeek;
+use function Quorum\Streams\funtil;
 
 class StreamsTest extends TestCase {
 
@@ -54,6 +55,31 @@ class StreamsTest extends TestCase {
 	public function test_fpeek_exception() : void {
 		$this->expectException(\InvalidArgumentException::class);
 		fpeek(123, 123);
+	}
+
+	public function test_funtil() : void {
+		$stream = fopen(__DIR__ . '/data/utf8.csv', 'r');
+
+		$this->assertTrue(funtil($stream, "\n", 0, $buf));
+		$this->assertSame("a,b,c\n", $buf);
+
+		$this->assertTrue(funtil($stream, "\n", 0, $buf));
+		$this->assertSame("1,2,3\n", $buf);
+
+		rewind($stream);
+		$this->assertTrue(funtil($stream, "4,5", 0, $buf));
+		$this->assertSame("a,b,c\n1,2,3\n4,5", $buf);
+
+		rewind($stream);
+		$this->assertFalse(funtil($stream, "does-not-exist", 0, $buf));
+		$this->assertSame("a,b,c\n1,2,3\n4,5,6\n", $buf);
+
+		rewind($stream);
+		$this->assertFalse(funtil($stream, "does-not-exist", 6, $buf));
+		$this->assertSame("a,b,c\n", $buf);
+
+		$this->assertTrue(funtil($stream, "2,", 6, $buf));
+		$this->assertSame("1,2,", $buf);
 	}
 
 }

@@ -54,23 +54,30 @@ function fpeek( $stream, int $length = 1 ) : string {
 /**
  * funtil reads the given stream until the given string is found or eof is reached
  *
- * @param resource $stream The stream to read, must be a seekable resource
- * @param string   $until The string to read until
- * @return string
+ * @param resource    $stream The stream to read, must be a seekable resource
+ * @param string      $until The string to read until
+ * @param int         $length The maximum number of bytes to read, defaults to 0 (no limit)
+ * @param string|null $buf The buffered contents by reference
+ * @return bool
  */
-// @todo look into how to correctly handle EOF here.
-function funtil( $stream, string $until ) : string {
+function funtil( $stream, string $until, int $length = 0, ?string &$buf = null ) : bool {
 	if( !is_resource($stream) ) {
 		throw new \InvalidArgumentException('Stream must be a resource');
 	}
 
 	$buf = '';
+	$j   = 0;
 	while( !feof($stream) ) {
 		$buf .= fgetc($stream);
+		$j++;
 		if( substr($buf, -strlen($until)) === $until ) {
-			break;
+			return true;
+		}
+
+		if( $length > 0 && $j >= $length ) {
+			return false;
 		}
 	}
 
-	return $buf;
+	return false;
 }
