@@ -1,21 +1,28 @@
 {
-    "name": "quorum/stream-functions",
-    "description": "useful stream handling functions",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Jesse Donat",
-            "email": "donatj@gmail.com"
-        }
-    ],
-    "require": {
-        "php": "^7.1|^8.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~5|~9"
-    },
-    "autoload"   : {
-        "files": ["src/streams.php"]
-    }
+	"name": "quorum/stream-functions",
+	"description": "useful php-stream resource handling functions for common lexing and parsing tasks",
+	"keywords": [
+		"lexing",
+		"parsing",
+		"stream"
+	],
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Jesse Donat",
+			"email": "donatj@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^7.1|^8.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~5|~9"
+	},
+	"autoload": {
+		"files": [
+			"src/streams.php"
+		]
+	}
 }
