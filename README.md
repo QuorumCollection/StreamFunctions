@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/quorum/stream-functions/version)](https://packagist.org/packages/quorum/stream-functions)
 [![License](https://poser.pugx.org/quorum/stream-functions/license)](https://packagist.org/packages/quorum/stream-functions)
-[![CI](https://github.com/QuorumCollection/StreamFunctions/workflows/CI/badge.svg?)](https://github.com/QuorumCollection/StreamFunctions/actions?query=workflow%3ACI)
+[![ci.yml](https://github.com/QuorumCollection/StreamFunctions/actions/workflows/ci.yml/badge.svg?)](https://github.com/QuorumCollection/StreamFunctions/actions/workflows/ci.yml)
 
 
 Useful functions for manipulating PHP streams (resources).
@@ -11,7 +11,7 @@ The general structure of these are inspired by a [talk given by Rob Pike](https:
 
 ## Requirements
 
-- **php**: ^7.1|^8.0
+- **php**: ^7.2|^8.0
 
 ## Installing
 
