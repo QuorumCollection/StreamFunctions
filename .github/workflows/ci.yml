@@ -28,4 +28,7 @@ jobs:
         run: composer install
 
       - name: Run tests
-        run: ./vendor/bin/phpunit
+        run: vendor/bin/phpunit
+
+      - name: Run tests
+        run: vendor/bin/phpstan
