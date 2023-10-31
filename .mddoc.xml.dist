@@ -3,7 +3,7 @@
 		<section title="Quorum Stream Functions">
 			<badge-poser type="version"/>
 			<badge-poser type="license"/>
-			<badge-github-action name="QuorumCollection/StreamFunctions" workflow="CI"/>
+			<badge-github-action name="QuorumCollection/StreamFunctions" workflow-file="ci.yml"/>
 			<text>Useful functions for manipulating PHP streams (resources).</text>
 			<text>The general structure of these are inspired by a [talk given by Rob Pike](https://www.youtube.com/watch?v=HxaD_trXwRE).</text>
 
