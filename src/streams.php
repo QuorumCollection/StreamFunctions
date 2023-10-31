@@ -36,8 +36,8 @@ function faccept( $stream, string ...$accept ) : ?string {
  *
  * The cursor is reset to its original position.
  *
- * @param resource $stream The stream to peek, must be a seekable resource
- * @param int      $length Up to length number of bytes read.
+ * @param resource   $stream The stream to peek, must be a seekable resource
+ * @param int $length Up to length number of bytes read.
  * @return string The peeked string of up to length bytes
  */
 function fpeek( $stream, int $length = 1 ) : string {
@@ -45,7 +45,7 @@ function fpeek( $stream, int $length = 1 ) : string {
 		throw new \InvalidArgumentException('Stream must be a resource');
 	}
 
-	$buf = fread($stream, $length);
+	$buf = fread($stream, $length) ?: '';
 	fseek($stream, 0 - strlen($buf), SEEK_CUR);
 
 	return $buf;
