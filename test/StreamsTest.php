@@ -32,6 +32,7 @@ class StreamsTest extends TestCase {
 
 	public function test_faccept_exception() : void {
 		$this->expectException(\InvalidArgumentException::class);
+		// @phpstan-ignore-next-line
 		faccept(123, 'test');
 	}
 
@@ -54,6 +55,7 @@ class StreamsTest extends TestCase {
 
 	public function test_fpeek_exception() : void {
 		$this->expectException(\InvalidArgumentException::class);
+		// @phpstan-ignore-next-line
 		fpeek(123, 123);
 	}
 
