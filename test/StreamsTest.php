@@ -9,8 +9,20 @@ use function Quorum\Streams\funtil;
 
 class StreamsTest extends TestCase {
 
+	/**
+	 * @return resource
+	 */
+	private function openStream( string $filename, string $mode ) {
+		$stream = fopen($filename, $mode);
+		if( $stream === false ) {
+			throw new \RuntimeException("Unable to open {$filename}");
+		}
+
+		return $stream;
+	}
+
 	public function test_faccept() : void {
-		$stream = fopen('php://memory', 'r+');
+		$stream = $this->openStream('php://memory', 'r+');
 		fwrite($stream, 'test-of-this');
 		rewind($stream);
 
@@ -21,12 +33,23 @@ class StreamsTest extends TestCase {
 
 		$this->assertSame('-t', faccept($stream, '-a', '-b', '-t'));
 		$this->assertSame('h', fread($stream, 1));
+
+		$this->assertSame('', faccept($stream, ''));
+	}
+
+	public function test_faccept_empty_fallback_preserves_cursor() : void {
+		$stream = $this->openStream('php://memory', 'r+');
+		fwrite($stream, 'a');
+		fseek($stream, 0, SEEK_END);
+
+		$this->assertSame('', faccept($stream, 'x', ''));
+		$this->assertSame(1, ftell($stream));
 	}
 
 	public function test_faccept_BOM() : void {
-		$stream = fopen(__DIR__ . '/data/utf8-bom.csv', 'r');
+		$stream = $this->openStream(__DIR__ . '/data/utf8-bom.csv', 'r');
 		$this->assertSame("\xEF\xBB\xBF", faccept($stream, "\xEF\xBB\xBF"));
-		$line = fgetcsv($stream);
+		$line = fgetcsv($stream, 0, ',', '"', '\\');
 		$this->assertSame([ 'a', 'b', 'c' ], $line);
 	}
 
@@ -37,7 +60,7 @@ class StreamsTest extends TestCase {
 	}
 
 	public function test_fpeek() : void {
-		$stream = fopen('php://memory', 'r+');
+		$stream = $this->openStream('php://memory', 'r+');
 		fwrite($stream, 'test');
 		rewind($stream);
 
@@ -48,7 +71,7 @@ class StreamsTest extends TestCase {
 	}
 
 	public function test_fpeek_empty() : void {
-		$stream = fopen('php://memory', 'r+');
+		$stream = $this->openStream('php://memory', 'r+');
 
 		$this->assertEquals('', fpeek($stream, 4));
 	}
@@ -59,8 +82,20 @@ class StreamsTest extends TestCase {
 		fpeek(123, 123);
 	}
 
+	public function test_fpeek_invalid_length_exception() : void {
+		$this->expectException(\InvalidArgumentException::class);
+		// @phpstan-ignore-next-line
+		fpeek($this->openStream('php://memory', 'r+'), 0);
+	}
+
+	public function test_funtil_invalid_length_exception() : void {
+		$this->expectException(\InvalidArgumentException::class);
+		$function = new \ReflectionFunction('Quorum\\Streams\\funtil');
+		$function->invoke($this->openStream('php://memory', 'r+'), '', -1);
+	}
+
 	public function test_funtil() : void {
-		$stream = fopen(__DIR__ . '/data/utf8.csv', 'r');
+		$stream = $this->openStream(__DIR__ . '/data/utf8.csv', 'r');
 
 		$this->assertTrue(funtil($stream, "\n", 0, $buf));
 		$this->assertSame("a,b,c\n", $buf);
