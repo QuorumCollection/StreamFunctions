@@ -20,12 +20,16 @@ function faccept( $stream, string ...$accept ) : ?string {
 
 	foreach( $accept as $item ) {
 		$length = strlen($item);
+		if( $length === 0 ) {
+			return $item;
+		}
+
 		$buf    = fread($stream, $length);
 		if( $buf === $item ) {
 			return $item;
 		}
 
-		fseek($stream, 0 - $length, SEEK_CUR);
+		fseek($stream, 0 - strlen($buf ?: ''), SEEK_CUR);
 	}
 
 	return null;
@@ -37,12 +41,16 @@ function faccept( $stream, string ...$accept ) : ?string {
  * The cursor is reset to its original position.
  *
  * @param resource   $stream The stream to peek, must be a seekable resource
- * @param int $length Up to length number of bytes read.
+ * @param positive-int $length Up to length number of bytes read.
  * @return string The peeked string of up to length bytes
  */
 function fpeek( $stream, int $length = 1 ) : string {
 	if( !is_resource($stream) ) {
 		throw new \InvalidArgumentException('Stream must be a resource');
+	}
+
+	if( $length < 1 ) {
+		throw new \InvalidArgumentException('Length must be positive');
 	}
 
 	$buf = fread($stream, $length) ?: '';
@@ -56,13 +64,18 @@ function fpeek( $stream, int $length = 1 ) : string {
  *
  * @param resource    $stream The stream to read, must be a seekable resource
  * @param string      $until The string to read until
- * @param int         $length The maximum number of bytes to read, defaults to 0 (no limit)
+ * @param non-negative-int $length The maximum number of bytes to read, defaults to 0 (no limit)
  * @param string|null $buf The buffered contents by reference
+ * @param-out string  $buf
  * @return bool
  */
 function funtil( $stream, string $until, int $length = 0, ?string &$buf = null ) : bool {
 	if( !is_resource($stream) ) {
 		throw new \InvalidArgumentException('Stream must be a resource');
+	}
+
+	if( $length < 0 ) {
+		throw new \InvalidArgumentException('Length must not be negative');
 	}
 
 	$buf = '';

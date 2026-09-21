@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/quorum/stream-functions/version)](https://packagist.org/packages/quorum/stream-functions)
 [![License](https://poser.pugx.org/quorum/stream-functions/license)](https://packagist.org/packages/quorum/stream-functions)
-[![ci.yml](https://github.com/QuorumCollection/StreamFunctions/actions/workflows/ci.yml/badge.svg?)](https://github.com/QuorumCollection/StreamFunctions/actions/workflows/ci.yml)
+[![ci.yml](https://github.com/QuorumCollection/StreamFunctions/actions/workflows/ci.yml/badge.svg)](https://github.com/QuorumCollection/StreamFunctions/actions/workflows/ci.yml)
 
 
 Useful functions for manipulating PHP streams (resources).
@@ -53,7 +53,7 @@ function fpeek($stream [, int $length = 1]) : string
 ##### Parameters:
 
 - ***resource*** `$stream` - The stream to peek, must be a seekable resource
-- ***int*** `$length` - Up to length number of bytes read.
+- ***positive-int*** `$length` - Up to length number of bytes read.
 
 ##### Returns:
 
@@ -73,7 +73,7 @@ function funtil($stream, string $until [, int $length = 0 [, ?string $buf = null
 
 - ***resource*** `$stream` - The stream to read, must be a seekable resource
 - ***string*** `$until` - The string to read until
-- ***int*** `$length` - The maximum number of bytes to read, defaults to 0 (no limit)
+- ***non-negative-int*** `$length` - The maximum number of bytes to read, defaults to 0 (no limit)
 - ***string*** | ***null*** `$buf` - The buffered contents by reference
 
 ##### Returns:
