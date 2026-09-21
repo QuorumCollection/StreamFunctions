@@ -11,7 +11,7 @@ The general structure of these are inspired by a [talk given by Rob Pike](https:
 
 ## Requirements
 
-- **php**: ^7.2|^8.0
+- **php**: ^7.4|^8.0
 
 ## Installing
 
