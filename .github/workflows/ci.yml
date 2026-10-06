@@ -32,3 +32,6 @@ jobs:
 
       - name: Run tests
         run: vendor/bin/phpstan
+
+      - name: Verify documentation
+        run: ./vendor/bin/mddoc --dry-run=true
