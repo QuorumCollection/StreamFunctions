@@ -26,15 +26,15 @@ composer require 'quorum/stream-functions'
 ### Function: \Quorum\Streams\faccept
 
 ```php
-function faccept($stream, string ...$accept) : ?string
+function faccept($stream, string ...$accept): ?string
 ```
 
-##### Parameters:
+##### Parameters
 
 - ***resource*** `$stream` - The stream to peek, must be a seekable resource
 - ***string*** `$accept` - One or more strings to accept
 
-##### Returns:
+##### Return Value
 
 - ***string*** | ***null*** - The accepted string or null if none were found
 
@@ -47,15 +47,15 @@ If the string is not found, the cursor is reset to its original position.
 ### Function: \Quorum\Streams\fpeek
 
 ```php
-function fpeek($stream [, int $length = 1]) : string
+function fpeek($stream, int $length = 1): string
 ```
 
-##### Parameters:
+##### Parameters
 
 - ***resource*** `$stream` - The stream to peek, must be a seekable resource
 - ***positive-int*** `$length` - Up to length number of bytes read.
 
-##### Returns:
+##### Return Value
 
 - ***string*** - The peeked string of up to length bytes
 
@@ -66,17 +66,22 @@ The cursor is reset to its original position.
 ### Function: \Quorum\Streams\funtil
 
 ```php
-function funtil($stream, string $until [, int $length = 0 [, ?string $buf = null]]) : bool
+function funtil(
+	$stream,
+	string $until,
+	int $length = 0,
+	?string $buf = null,
+): bool
 ```
 
-##### Parameters:
+##### Parameters
 
 - ***resource*** `$stream` - The stream to read, must be a seekable resource
 - ***string*** `$until` - The string to read until
 - ***non-negative-int*** `$length` - The maximum number of bytes to read, defaults to 0 (no limit)
 - ***string*** | ***null*** `$buf` - The buffered contents by reference
 
-##### Returns:
+##### Return Value
 
 - ***bool***
 
